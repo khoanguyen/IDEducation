@@ -1,0 +1,39 @@
+﻿@model IDEducation.AuthServer.Models.FirstRunConfiguration
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="jumbotron">First-run Configuration</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.PublicKey)</label>
+                <blockquote>
+                    @Html.DisplayTextFor(m => m.PublicKey)
+                </blockquote>
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.SuperAdminUsername)</label>
+                @Html.TextBoxFor(m => m.SuperAdminUsername, new { @class = "form-control", maxlength = 50, autocomplete = "on" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.SuperAdminPassword)</label>
+                @Html.PasswordFor(m => m.SuperAdminUsername, new { @class = "form-control", maxlength = 50 })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ConfirmSuperAdminPassword)</label>
+                @Html.PasswordFor(m => m.ConfirmSuperAdminPassword, new { @class = "form-control", maxlength = 50 })
+            </div>
+            
+            <div class="form-group">
+                <button class="btn btn-primary">Configure</button>
+            </div>
+        }
+    </div>
+</div>

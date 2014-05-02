@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IDEAuthDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuthorizedClients">
+          <Key>
+            <PropertyRef Name="AuthorizedClientId" />
+          </Key>
+          <Property Name="AuthorizedClientId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClientId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientSecret" Type="varchar(max)" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimTypes">
+          <Key>
+            <PropertyRef Name="ClaimTypeId" />
+          </Key>
+          <Property Name="ClaimTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClaimUri" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsRegularClaim" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profiles">
+          <Key>
+            <PropertyRef Name="UserAccountId" />
+          </Key>
+          <Property Name="UserAccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="Mobile" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="UserAccounts">
+          <Key>
+            <PropertyRef Name="UserAccountId" />
+          </Key>
+          <Property Name="UserAccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="varchar" MaxLength="200" />
+          <Property Name="Salt" Type="varchar" MaxLength="200" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="UserClaimId" />
+          </Key>
+          <Property Name="UserClaimId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserAccountId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClaimTypeId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ResourceName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Right" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Profiles_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserAccountId" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="UserAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_ClaimTypes">
+          <End Role="ClaimTypes" Type="Self.ClaimTypes" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimTypes">
+              <PropertyRef Name="ClaimTypeId" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="ClaimTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccounts" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserAccountId" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IDEAuthDBModelStoreContainer">
+          <EntitySet Name="AuthorizedClients" EntityType="Self.AuthorizedClients" Schema="Auth" store:Type="Tables" />
+          <EntitySet Name="ClaimTypes" EntityType="Self.ClaimTypes" Schema="Auth" store:Type="Tables" />
+          <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="Auth" store:Type="Tables" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="Auth" store:Type="Tables" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="Auth" store:Type="Tables" />
+          <AssociationSet Name="FK_Profiles_UserAccounts" Association="Self.FK_Profiles_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_ClaimTypes" Association="Self.FK_UserClaims_ClaimTypes">
+            <End Role="ClaimTypes" EntitySet="ClaimTypes" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_UserAccounts" Association="Self.FK_UserClaims_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IDEAuthDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AuthorizedClient">
+          <Key>
+            <PropertyRef Name="AuthorizedClientId" />
+          </Key>
+          <Property Name="AuthorizedClientId" Type="Guid" Nullable="false" />
+          <Property Name="ClientId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientSecret" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="IDEAuthDBModel.ClientStatus" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClaimType">
+          <Key>
+            <PropertyRef Name="ClaimTypeId" />
+          </Key>
+          <Property Name="ClaimTypeId" Type="Guid" Nullable="false" />
+          <Property Name="ClaimType1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimUri" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsRegularClaim" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaims_ClaimTypes" FromRole="ClaimTypes" ToRole="UserClaims" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="UserAccountId" />
+          </Key>
+          <Property Name="UserAccountId" Type="Guid" Nullable="false" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserAccount" Relationship="Self.FK_Profiles_UserAccounts" FromRole="Profiles" ToRole="UserAccounts" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="UserAccountId" />
+          </Key>
+          <Property Name="UserAccountId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="IDEAuthDBModel.AccountStatus" Nullable="false" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK_Profiles_UserAccounts" FromRole="UserAccounts" ToRole="Profiles" />
+          <NavigationProperty Name="UserClaims" Relationship="Self.FK_UserClaims_UserAccounts" FromRole="UserAccounts" ToRole="UserClaims" />
+        </EntityType>
+        <EntityType Name="UserClaim">
+          <Key>
+            <PropertyRef Name="UserClaimId" />
+          </Key>
+          <Property Name="UserClaimId" Type="Guid" Nullable="false" />
+          <Property Name="UserAccountId" Type="Guid" Nullable="false" />
+          <Property Name="ClaimTypeId" Type="Guid" Nullable="false" />
+          <Property Name="ResourceName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Right" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ClaimType" Relationship="Self.FK_UserClaims_ClaimTypes" FromRole="UserClaims" ToRole="ClaimTypes" />
+          <NavigationProperty Name="UserAccount" Relationship="Self.FK_UserClaims_UserAccounts" FromRole="UserClaims" ToRole="UserAccounts" />
+        </EntityType>
+        <Association Name="FK_UserClaims_ClaimTypes">
+          <End Role="ClaimTypes" Type="Self.ClaimType" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClaimTypes">
+              <PropertyRef Name="ClaimTypeId" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="ClaimTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Profiles_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="1" />
+          <End Role="Profiles" Type="Self.Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserAccountId" />
+            </Principal>
+            <Dependent Role="Profiles">
+              <PropertyRef Name="UserAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_UserAccounts">
+          <End Role="UserAccounts" Type="Self.UserAccount" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccounts">
+              <PropertyRef Name="UserAccountId" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IDEAuthQueryContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuthorizedClients" EntityType="Self.AuthorizedClient" />
+          <EntitySet Name="ClaimTypes" EntityType="Self.ClaimType" />
+          <EntitySet Name="Profiles" EntityType="Self.Profile" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaim" />
+          <AssociationSet Name="FK_UserClaims_ClaimTypes" Association="Self.FK_UserClaims_ClaimTypes">
+            <End Role="ClaimTypes" EntitySet="ClaimTypes" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Profiles_UserAccounts" Association="Self.FK_Profiles_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="Profiles" EntitySet="Profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_UserAccounts" Association="Self.FK_UserClaims_UserAccounts">
+            <End Role="UserAccounts" EntitySet="UserAccounts" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+        </EntityContainer>
+        <EnumType Name="AccountStatus" UnderlyingType="Byte">
+          <Member Name="Active" Value="1" />
+          <Member Name="Locked" Value="0" />
+        </EnumType>
+        <EnumType Name="ClientStatus" UnderlyingType="Byte">
+          <Member Name="Active" Value="1" />
+          <Member Name="Locked" Value="0" />
+        </EnumType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IDEAuthDBModelStoreContainer" CdmEntityContainer="IDEAuthQueryContext">
+          <EntitySetMapping Name="AuthorizedClients">
+            <EntityTypeMapping TypeName="IDEAuthDBModel.AuthorizedClient">
+              <MappingFragment StoreEntitySet="AuthorizedClients">
+                <ScalarProperty Name="AuthorizedClientId" ColumnName="AuthorizedClientId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientSecret" ColumnName="ClientSecret" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClaimTypes">
+            <EntityTypeMapping TypeName="IDEAuthDBModel.ClaimType">
+              <MappingFragment StoreEntitySet="ClaimTypes">
+                <ScalarProperty Name="ClaimTypeId" ColumnName="ClaimTypeId" />
+                <ScalarProperty Name="ClaimType1" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimUri" ColumnName="ClaimUri" />
+                <ScalarProperty Name="IsRegularClaim" ColumnName="IsRegularClaim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profiles">
+            <EntityTypeMapping TypeName="IDEAuthDBModel.Profile">
+              <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="UserAccountId" ColumnName="UserAccountId" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccounts">
+            <EntityTypeMapping TypeName="IDEAuthDBModel.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccounts">
+                <ScalarProperty Name="UserAccountId" ColumnName="UserAccountId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="IDEAuthDBModel.UserClaim">
+              <MappingFragment StoreEntitySet="UserClaims">
+                <ScalarProperty Name="UserClaimId" ColumnName="UserClaimId" />
+                <ScalarProperty Name="UserAccountId" ColumnName="UserAccountId" />
+                <ScalarProperty Name="ClaimTypeId" ColumnName="ClaimTypeId" />
+                <ScalarProperty Name="ResourceName" ColumnName="ResourceName" />
+                <ScalarProperty Name="Right" ColumnName="Right" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

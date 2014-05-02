@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="03748396-a26c-4776-be94-8fe16c95a12d" ChangeDateTime="04/29/2014 19:57:05">
+    <Property Name="ElementName" Value="[dbo].[Users].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02d288c2-563d-4f42-b77b-e1514852e698" ChangeDateTime="04/29/2014 20:00:11">
+    <Property Name="ElementName" Value="[Auth].[UserAccounts].[IX_UserAccounts_Column]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[Auth].[UserAccounts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[IX_UserAccounts_UserName]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="adf2e6f3-9f41-476c-b747-e9ae7aecbcc3" ChangeDateTime="04/29/2014 20:00:50">
+    <Property Name="ElementName" Value="[Auth].[UserAccounts].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Auth].[UserAccounts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserAccountId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f475b7f5-ce48-428b-9a0e-9c5401dc3361" ChangeDateTime="04/29/2014 20:01:01">
+    <Property Name="ElementName" Value="[Auth].[Profiles].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Auth].[Profiles]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserAccountId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fe9d9a0a-7498-406c-b424-792cd3b5a3b5" ChangeDateTime="04/29/2014 20:05:27">
+    <Property Name="ElementName" Value="[dbo].[UserClaims].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserClaims]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ClaimId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d383d882-4b08-4422-967a-e1960aad58de" ChangeDateTime="04/29/2014 20:07:50">
+    <Property Name="ElementName" Value="[dbo].[ClaimTypes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ClaimTypes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ClaimTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="da7bccc3-6716-4098-865d-37633c1edcba" ChangeDateTime="04/29/2014 20:09:48">
+    <Property Name="ElementName" Value="[dbo].[UserClaims].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserClaims]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserClaimId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8adb77be-3245-4aeb-b16e-c5b06eace0fa" ChangeDateTime="04/29/2014 20:10:34">
+    <Property Name="ElementName" Value="[dbo].[UserClaims].[ClaimType]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserClaims]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ClaimTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3e7c254e-f0ca-43ea-b5c2-e62c9012274c" ChangeDateTime="04/29/2014 20:19:30">
+    <Property Name="ElementName" Value="[Auth].[AuthorizedClients].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Auth].[AuthorizedClients]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AuthorizedClientId" />
+  </Operation>
+</Operations>
